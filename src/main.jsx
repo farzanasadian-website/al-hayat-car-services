@@ -1,105 +1,97 @@
 import React, {useState} from 'react';
 import { createRoot } from 'react-dom/client';
-import {Wrench, Droplets, BatteryCharging, Disc3, Gauge, Sparkles, Car, MapPin, Phone, MessageCircle, CalendarCheck, ShieldCheck, Timer, Star, Settings, Zap, Globe2, ChevronRight, PlayCircle, Languages, BadgeCheck, CircleDot} from 'lucide-react';
-import './style.css';
+import { Wrench, Gauge, Battery, Disc3, Car, Sparkles, Droplets, Snowflake, Cpu, MapPin, Phone, MessageCircle, Clock3, ShieldCheck, Star, Settings, Zap, Languages, ChevronRight } from 'lucide-react';
+import './styles.css';
 
-const phoneCall = '+971506031369';
-const phoneWhats = '+971522553418';
-const website = 'www.alhayatcarservices.com';
-const addressEN = 'Al Jurf, Ajman, United Arab Emirates';
-const addressAR = 'الجرف، عجمان، الإمارات العربية المتحدة';
-const waLink = `https://wa.me/${phoneWhats.replace('+','')}`;
+const img = (n)=>`/images/${n}`;
+const wa = 'https://wa.me/971522553418';
+const phone = 'tel:+971506031369';
 
-const img = (name)=>`/images/${name}`;
-const vid = (name)=>`/videos/${name}`;
-
-const services = [
-  ['Mechanical Repair','Engine, suspension, transmission & general repair','إصلاح ميكانيكي','المحرك، التعليق، ناقل الحركة والإصلاح العام', Wrench, '1000332058.jpg'],
-  ['A/C Repair','Cooling system diagnosis & gas refill','إصلاح المكيف','تشخيص نظام التبريد وتعبئة الغاز', Sparkles, '1000332073.jpg'],
-  ['Computer Diagnosis','Advanced fault detection','فحص كمبيوتر','كشف الأعطال بدقة', Gauge, '1000332064.jpg'],
-  ['Injector Repair','Injector cleaning & repair','إصلاح البخاخات','تنظيف وإصلاح البخاخات', CircleDot, '1000332063.jpg'],
-  ['Oil Change','Mobil 1 products & filters','تغيير الزيت','منتجات وفلاتر Mobil 1', Droplets, '1000332063.jpg'],
-  ['Tyre Services','Replacement & balancing','خدمات الإطارات','تبديل وترصيص الإطارات', Disc3, '1000332061.jpg'],
-  ['Brake Service','Pads, discs & inspection','خدمة الفرامل','فحمات، هوبات وفحص', ShieldCheck, '1000332096.jpg'],
-  ['Electrical Repair','Wiring, lights & electrical systems','إصلاح الكهرباء','الأسلاك، الأنوار والأنظمة الكهربائية', Zap, '1000332064.jpg'],
-  ['Battery Replacement','Battery testing & replacement','تبديل البطارية','فحص وتبديل البطارية', BatteryCharging, '1000332095.jpg'],
-  ['Car Wash','Interior & exterior cleaning','غسيل السيارات','تنظيف داخلي وخارجي', Car, '1000332090.jpg'],
-  ['Car Polish','Professional detailing & shine','تلميع السيارات','تلميع وديتيلينغ احترافي', Sparkles, '1000332091.jpg'],
-  ['Auto Accessories','Seat covers, wipers & more','إكسسوارات السيارات','تلبيسات، مسّاحات والمزيد', Settings, '1000332072.jpg']
-];
-
-const gallery = ['1000332080.jpg','1000332078.jpg','1000332060.jpg','1000332056.jpg','1000332058.jpg','1000332061.jpg','1000332065.jpg','1000332068.jpg','1000332072.jpg','1000332076.jpg','1000332077.jpg','1000332081.jpg','1000332090.jpg','1000332091.jpg'];
-const videos = ['1000332135.mp4','1000332138.mp4','1000332137.mp4'];
-
-const text = {
+const content = {
   en: {
     nav:['Home','Services','About Us','Mobil 1 Center','Gallery','Contact'],
-    loc:'Al Jurf, Ajman - UAE',
-    hero:'Complete Car Care Under One Roof',
-    heroRed:'One Roof',
-    sub:'Professional automotive repair and maintenance services in Ajman powered by experience, quality and Mobil 1 products.',
-    arabicLine:'خدمات متكاملة لسيارتك تحت سقف واحد',
-    book:'Book Service', wa:'WhatsApp Us',
-    stats:['Professional Technicians','Premium Mobil 1 Products','Modern Equipment','Fast Service','Customer Satisfaction','One Stop Solution'],
-    services:'Our Services', about:'About Us', gallery:'Our Gallery', video:'Workshop Videos', contact:'Contact Us', powered:'Powered by',
-    aboutText:'AL HAYAT CAR SERVICES is a professional automotive service center located in Al Jurf, Ajman, UAE. We provide complete vehicle care including mechanical repair, diagnostics, A/C services, oil changes, tyre services, electrical work, detailing and premium Mobil 1 lubrication products.',
-    mission:'Our mission is to provide reliable service, transparent pricing and exceptional customer satisfaction.',
-    read:'Read More About Us', view:'View Full Gallery', one:'One Stop Solution', products:'Mobil 1 Products', center:'Ajman Service Center', call:'Call Now', map:'Open Map', site:'Website', phone:'Phone', whatsapp:'WhatsApp'
+    heroTitle:<><span>Complete Car Care</span><span>Under <b>One Roof</b></span></>,
+    heroText:'Professional automotive repair, maintenance, premium Mobil 1 lubrication, car wash and detailing services in Al Jurf, Ajman.',
+    heroSub:'Integrated vehicle services under one trusted roof.',
+    book:'Book Service', whats:'WhatsApp Us',
+    badges:['Professional Technicians','Premium Mobil 1 Products','Modern Equipment','Fast Service','Customer Satisfaction','One Stop Solution'],
+    aboutTitle:'ABOUT US',
+    about:'AL HAYAT CAR SERVICES is a professional automotive service center located in Al Jurf, Ajman, UAE. We provide complete vehicle care including mechanical repair, diagnostics, A/C services, oil changes, tyre services, electrical work, car wash, polishing, detailing and premium Mobil 1 lubrication products.',
+    mobil:'Powered by premium Mobil 1 products, stocked and displayed professionally for quick oil service and customer confidence.',
+    gallery:'OUR GALLERY', contact:'CONTACT US',
+    address:'Al Jurf, Ajman, United Arab Emirates',
   },
   ar: {
-    nav:['الرئيسية','الخدمات','من نحن','مركز Mobil 1','المعرض','اتصل بنا'],
-    loc:'الجرف، عجمان - الإمارات',
-    hero:'خدمات متكاملة للسيارات تحت سقف واحد',
-    heroRed:'سقف واحد',
-    sub:'خدمات إصلاح وصيانة سيارات احترافية في عجمان بخبرة عالية وجودة ممتازة ومنتجات Mobil 1.',
-    arabicLine:'Complete car care under one roof',
-    book:'احجز خدمة', wa:'راسلنا واتساب',
-    stats:['فنيون محترفون','منتجات Mobil 1 أصلية','معدات حديثة','خدمة سريعة','رضا العملاء','حل متكامل'],
-    services:'خدماتنا', about:'من نحن', gallery:'المعرض', video:'فيديوهات الورشة', contact:'تواصل معنا', powered:'مدعوم من',
-    aboutText:'الحياة لخدمات السيارات هو مركز صيانة سيارات احترافي يقع في الجرف، عجمان، الإمارات. نقدم رعاية متكاملة للسيارات تشمل الإصلاح الميكانيكي، فحص الكمبيوتر، خدمات المكيف، تغيير الزيت، الإطارات، الكهرباء، التلميع ومنتجات Mobil 1 عالية الجودة.',
-    mission:'هدفنا تقديم خدمة موثوقة، أسعار واضحة وتجربة ممتازة للعملاء.',
-    read:'اقرأ المزيد', view:'عرض المعرض', one:'حل متكامل', products:'منتجات Mobil 1', center:'مركز خدمة عجمان', call:'اتصل الآن', map:'افتح الخريطة', site:'الموقع', phone:'الهاتف', whatsapp:'واتساب'
+    nav:['الرئيسية','الخدمات','من نحن','مركز موبيل 1','المعرض','اتصل بنا'],
+    heroTitle:<><span>خدمات متكاملة</span><span>للسيارات <b>تحت سقف واحد</b></span></>,
+    heroText:'خدمات احترافية لصيانة وإصلاح السيارات وتغيير زيوت Mobil 1 وغسيل وتلميع السيارات في الجرف، عجمان.',
+    heroSub:'خدمة موثوقة ومتكاملة لسيارتك في مكان واحد.',
+    book:'احجز خدمة', whats:'واتساب',
+    badges:['فنيون محترفون','منتجات Mobil 1 أصلية','معدات حديثة','خدمة سريعة','رضا العملاء','حل متكامل'],
+    aboutTitle:'من نحن',
+    about:'الحياة لخدمات السيارات مركز متخصص في الجرف، عجمان، الإمارات. نقدم خدمات متكاملة تشمل الإصلاحات الميكانيكية، الفحص بالكمبيوتر، التكييف، تغيير الزيوت، الإطارات، الكهرباء، غسيل السيارات، التلميع ومنتجات Mobil 1 الممتازة.',
+    mobil:'مدعومون بمنتجات Mobil 1 الممتازة مع عرض احترافي للزيوت لتقديم خدمة أسرع وثقة أعلى للعملاء.',
+    gallery:'المعرض', contact:'اتصل بنا',
+    address:'الجرف، عجمان، الإمارات العربية المتحدة',
   }
 };
 
+const serviceData = [
+  ['Mechanical Repair','إصلاح ميكانيكي','Engine, suspension, transmission & general repair','المحرك، التعليق، الجير والإصلاح العام',img('mechanical.jpg'),Wrench],
+  ['A/C Repair','إصلاح التكييف','Cooling system diagnosis & gas refill','فحص نظام التبريد وتعبئة الغاز',img('ac-service.jpg'),Snowflake],
+  ['Computer Diagnosis','فحص كمبيوتر','Advanced fault detection','كشف الأعطال بالكمبيوتر',img('oil-corner.jpg'),Cpu],
+  ['Injector Repair','إصلاح الانجكتر','Injector cleaning & repair','تنظيف وإصلاح الانجكتر',img('ac-service.jpg'),Gauge],
+  ['Oil Change','تغيير الزيت','Mobil 1 oil products & filters','زيوت Mobil 1 والفلاتر',img('mobil-stand.jpg'),Droplets],
+  ['Tyre Services','خدمات الإطارات','Replacement & balancing','تبديل وميزان الإطارات',img('tyre.jpg'),Disc3],
+  ['Brake Service','خدمة الفرامل','Pads, discs & inspection','فحص وتبديل الفحمات والدسكات',img('lifts.jpg'),Disc3],
+  ['Electrical Repair','إصلاح الكهرباء','Wiring, lights & electrical systems','الأسلاك والأنوار والأنظمة الكهربائية',img('workshop-wide.jpg'),Zap],
+  ['Battery Replacement','تبديل البطارية','Battery testing & replacement','فحص وتبديل البطارية',img('workshop-wide.jpg'),Battery],
+  ['Car Wash','غسيل سيارات','Interior & exterior cleaning','غسيل داخلي وخارجي',img('carwash.jpg'),Car],
+  ['Car Polish','تلميع السيارات','Professional detailing & shine','تلميع وتفصيل احترافي',img('carwash-detail.jpg'),Sparkles],
+  ['Auto Accessories','إكسسوارات السيارات','Seat covers, wipers, interior accessories & more','تلبيسات، مساحات وإكسسوارات داخلية',img('accessories.jpg'),Settings],
+];
+
+function ExplodedCar(){
+  return <div className="exploded-wrap" aria-label="Interactive exploded car concept">
+    <div className="exploded-glow"></div>
+    <div className="part body"></div><div className="part hood"></div><div className="part roof"></div><div className="part wheel w1"></div><div className="part wheel w2"></div><div className="part engine"></div><div className="part light l1"></div><div className="part light l2"></div>
+    <div className="label-chip">Interactive 3D-style care system</div>
+  </div>
+}
+
 function App(){
- const [lang,setLang]=useState('en'); const t=text[lang]; const rtl=lang==='ar';
- const scrollTo=(id)=>document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
- return <main dir={rtl?'rtl':'ltr'} className={rtl?'rtl':''}>
-   <div className="orb orb1"></div><div className="orb orb2"></div>
-   <header className="topbar">
-    <div className="brand"><img src={img('1782227313435.jpeg')} /><div><b>AL HAYAT</b><span>CAR SERVICES</span><small>الحياة لخدمات السيارات</small></div></div>
-    <nav>{t.nav.map((n,i)=><button key={n} onClick={()=>scrollTo(['home','services','about','mobil','gallery','contact'][i])}>{n}</button>)}</nav>
-    <div className="actions"><button className="lang" onClick={()=>setLang(lang==='en'?'ar':'en')}><Languages size={16}/>{lang==='en'?'EN | عربي':'عربي | EN'}</button><a className="wa" href={waLink}><MessageCircle size={18}/>{t.wa}</a></div>
-   </header>
+  const [lang,setLang]=useState('en'); const t=content[lang]; const rtl=lang==='ar';
+  const nav = t.nav;
+  return <main className={rtl?'rtl':''} dir={rtl?'rtl':'ltr'}>
+    <header className="topbar">
+      <a className="brand" href="#home"><img src={img('logo.jpg')} /><div><strong>AL HAYAT</strong><span>CAR SERVICES</span><small>الحياة لخدمات السيارات</small></div></a>
+      <nav>{nav.map((n,i)=><a key={n} href={`#${['home','services','about','mobil','gallery','contact'][i]}`}>{n}</a>)}</nav>
+      <div className="actions"><button onClick={()=>setLang(lang==='en'?'ar':'en')} className="lang"><Languages size={16}/>{lang==='en'?'عربي':'EN'}</button><a className="wa" href={wa}><MessageCircle size={18}/> WhatsApp</a></div>
+    </header>
 
-   <section id="home" className="hero">
-    <div className="hero-bg"><img src={img('1000332080.jpg')} /></div>
-    <div className="hero-content">
-      <div className="left-copy">
-        <div className="pin"><MapPin size={16}/>{t.loc}</div>
-        <h1>{lang==='en'?<>Complete Car Care<br/>Under <em>One Roof</em></>:<>خدمات متكاملة<br/>للسيارات تحت <em>سقف واحد</em></>}</h1>
-        <p>{t.sub}</p><h3>{t.arabicLine}</h3>
-        <div className="cta"><a href={waLink} className="primary"><CalendarCheck size={20}/>{t.book}</a><a className="secondary" href={waLink}><MessageCircle size={20}/>{t.wa}</a></div>
+    <section id="home" className="hero">
+      <div className="hero-bg" style={{backgroundImage:`url(${img('exterior3.jpg')})`}}></div><div className="hero-overlay"></div>
+      <div className="hero-content">
+        <div className="copy"><p className="loc"><MapPin size={16}/> {t.address}</p><h1>{t.heroTitle}</h1><p className="lead">{t.heroText}</p><p className="arabic-line">{t.heroSub}</p><div className="hero-buttons"><a className="primary" href={wa}>{t.book}</a><a className="secondary" href={wa}><MessageCircle size={18}/>{t.whats}</a></div></div>
+        <div className="hero-visual"><ExplodedCar/><div className="video-card"><video src="/videos/showcase.mp4" autoPlay muted loop playsInline poster={img('workshop-wide.jpg')}></video><div className="video-caption"><b>AL HAYAT</b><span>Workshop in action</span></div></div></div>
       </div>
-      <div className="hero-card tilt"><div className="shine"></div><img src={img('1782227313435.jpeg')} /><h2>AL HAYAT</h2><b>CAR SERVICES</b><small>الحياة لخدمات السيارات</small><div className="mini"><span><BadgeCheck/> {t.one}</span><span><Droplets/> {t.products}</span><span><MapPin/> {t.center}</span></div></div>
-    </div>
-    <div className="feature-strip">{t.stats.map((s,i)=>{const Icon=[Wrench,Droplets,Settings,Timer,Star,ShieldCheck][i]; return <div key={s}><Icon/><span>{s}</span></div>})}</div>
-   </section>
+      <div className="trust-row">{t.badges.map((b,i)=>{const icons=[Wrench,Droplets,Settings,Clock3,Star,ShieldCheck]; const I=icons[i]; return <div className="trust" key={b}><I size={25}/><span>{b}</span></div>})}</div>
+    </section>
 
-   <section id="services" className="section services-wrap"><div className="title"><h2>{t.services}</h2><span></span></div><div className="services-grid">{services.map(([en,desc,ar,ardesc,Icon,image])=><article className="service-card" key={en}><img src={img(image)} /><div><Icon/><h4>{lang==='en'?en:ar}</h4><p>{lang==='en'?desc:ardesc}</p></div></article>)}</div></section>
+    <section id="services" className="section services-section"><div className="section-title"><span>OUR</span><b>SERVICES</b></div><div className="services-grid">
+      {serviceData.map(([en,ar,ed,ad,photo,Icon])=><article className="service-card" key={en}><img src={photo}/><div className="service-icon"><Icon size={22}/></div><h3>{rtl?ar:en}</h3><p>{rtl?ad:ed}</p></article>)}
+    </div></section>
 
-   <section id="about" className="section split"><div className="panel about"><div className="title"><h2>{t.about}</h2><span></span></div><p>{t.aboutText}</p><p>{t.mission}</p><a href={waLink} className="darkbtn">{t.read}<ChevronRight size={18}/></a></div><div id="mobil" className="mobil panel"><h3>{t.powered}</h3><h2>Mobil 1™</h2><p>{lang==='en'?'We use premium Mobil 1 products to help keep your engine performing at its best.':'نستخدم منتجات Mobil 1 الممتازة للمساعدة في الحفاظ على أفضل أداء للمحرك.'}</p><img src={img('1000332063.jpg')} /></div></section>
+    <section id="about" className="section about-grid"><div className="about-card"><h2>{t.aboutTitle}</h2><p>{t.about}</p><div className="about-stats"><span><b>12+</b> Services</span><span><b>Mobil 1</b> Products</span><span><b>Ajman</b> Location</span></div><a className="readmore" href="#contact">Contact Us <ChevronRight size={17}/></a></div><div id="mobil" className="mobil-card"><img src={img('mobil-stand.jpg')} /><div><h2>Powered by <b>Mobil 1™</b></h2><p>{t.mobil}</p></div></div></section>
 
-   <section id="gallery" className="section"><div className="title"><h2>{t.gallery}</h2><span></span></div><div className="gallery-grid">{gallery.map((g,i)=><img key={g} src={img(g)} className={i%5===0?'wide':''}/>)}</div></section>
+    <section id="gallery" className="section gallery"><div className="section-title"><span>{rtl?'':'OUR'}</span><b>{t.gallery}</b></div><div className="gallery-grid">
+      {['hero-exterior.jpg','workshop-wide.jpg','lifts.jpg','carwash.jpg','accessories.jpg','tint.jpg','lounge.jpg','exterior2.jpg'].map((g,i)=><img key={g} src={img(g)} className={i===0?'wide':''}/>) }
+    </div></section>
 
-   <section className="section video-section"><div className="title"><h2>{t.video}</h2><span></span></div><div className="video-grid">{videos.map(v=><video key={v} src={vid(v)} controls muted playsInline preload="metadata" />)}</div></section>
+    <section id="contact" className="contact"><div><h2>{t.contact}</h2><p><MapPin/> {t.address}</p><p><MessageCircle/> +971 52 255 3418 (WhatsApp)</p><p><Phone/> +971 50 603 1369 (Phone)</p></div><div className="contact-actions"><a href={wa} className="primary"><MessageCircle/> WhatsApp Us</a><a href={phone} className="secondary"><Phone/> Call Now</a></div></section>
 
-   <section id="contact" className="contact"><div><h2>{t.contact}</h2><p><MapPin/> {rtl?addressAR:addressEN}</p></div><a href={waLink}><MessageCircle/> {phoneWhats} <small>({t.whatsapp})</small></a><a href={`tel:${phoneCall}`}><Phone/> {phoneCall} <small>({t.phone})</small></a><a href="https://www.google.com/maps/search/?api=1&query=AL+HAYAT+CAR+SERVICES+Al+Jurf+Ajman"><MapPin/> {t.map}</a><a href={`https://${website}`}><Globe2/> {website}</a></section>
-
-   <footer><div className="brand small"><img src={img('1782227313435.jpeg')} /><div><b>AL HAYAT</b><span>CAR SERVICES</span></div></div><p>© 2026 AL HAYAT CAR SERVICES (S.P.S - L.L.C). All Rights Reserved.</p><div className="social"><a href={waLink}><MessageCircle/></a><a href={`tel:${phoneCall}`}><Phone/></a><a href="https://www.google.com/maps/search/?api=1&query=AL+HAYAT+CAR+SERVICES+Al+Jurf+Ajman"><MapPin/></a></div></footer>
-   <a className="floatwa" href={waLink}><MessageCircle/> WhatsApp</a>
- </main>
+    <footer><div className="brand small"><img src={img('logo.jpg')} /><div><strong>AL HAYAT</strong><span>CAR SERVICES</span></div></div><p>© 2026 AL HAYAT CAR SERVICES (S.P.S - L.L.C). All Rights Reserved.</p><div><Star/><MessageCircle/><Phone/></div></footer>
+  </main>
 }
 
 createRoot(document.getElementById('root')).render(<App/>);

@@ -1,18 +1,12 @@
-# AL HAYAT Car Services Website
+# AL HAYAT CAR SERVICES Premium Website V3
 
-Professional bilingual website for AL HAYAT CAR SERVICES (S.P.S - L.L.C), Ajman, UAE.
+Ready for Vercel. Upload all files and folders to the root of your GitHub repository.
 
-## Vercel settings
-- Framework: Vite
-- Build command: npm run build
-- Output directory: dist
+Main folders/files:
+- public
+- src
+- index.html
+- package.json
+- README.md
 
-## Update contact info
-Edit `src/main.jsx`:
-- phone
-- whatsapp
-- addressEN / addressAR
-
-## Local preview
-npm install
-npm run dev
+After upload, Vercel will deploy automatically.
